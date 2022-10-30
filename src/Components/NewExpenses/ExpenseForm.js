@@ -2,13 +2,31 @@ import React from "react";
 import "./ExpenseForm.css";
 import { useState } from "react";
 
-const ExpenseForm = () => {
-  const [title, setTitle] = useState("");
-  const [amount, setAmount] = useState("");
-  const [date, setDate] = useState("");
+const ExpenseForm = (props) => {
+  const [enteredTitle, setTitle] = useState("");
+  const [enteredAmount, setAmount] = useState("");
+  const [enteredDate, setDate] = useState("");
+  //   const [userInput, setUserInput] = useState({
+  //     enteredTitle: "",
+  //     enteredAamount: "",
+  //     enteredDate: "",
+  //   });
 
+  //   const titleChangeHandler = (e) => {
+  // setTitle(console.log(e.target.value));
+
+  // setUserInput({
+  //   ...userInput,
+  //   enteredTitle: event.target.value,
+  // });
+  // setUserInput((prevState) => {
+  //   return { ...prevState, enteredTitle: event.target.value };
+  // });
+  // jos jedan od nacina pisanja vukcije gore, mozda korektnija
+  //jer stajtovi zavise od prethodnih stejtova
+  //   };
   const titleChangeHandler = (e) => {
-    setTitle(console.log(e.target.value));
+    setTitle(e.target.value);
   };
   const amountChangeHandler = (e) => {
     setAmount(e.target.value);
@@ -16,8 +34,17 @@ const ExpenseForm = () => {
   const dateChangeHandler = (e) => {
     setDate(e.target.value);
   };
+  const submitHandler = (e) => {
+    e.preventDefault();
+    const expenseData = {
+      title: enteredTitle,
+      amount: enteredAmount,
+      date: new Date(enteredDate),
+    };
+    console.log(expenseData);
+  };
   return (
-    <form>
+    <form onSubmit={submitHandler}>
       <div className="new-expense__controls">
         <div className="new-expense__control">
           <label>Title</label>
@@ -46,6 +73,7 @@ const ExpenseForm = () => {
         <button type="submit" className="new-expense__actions">
           Add expense
         </button>
+        <button onClick={props.cancelCard}>Cancel</button>
       </div>
     </form>
   );
