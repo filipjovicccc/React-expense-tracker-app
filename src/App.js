@@ -1,7 +1,9 @@
 import Expenses from "./Components/Expenses/Expenses";
 import ExpenseForm from "./Components/NewExpenses/ExpenseForm";
 import NewExpenses from "./Components/NewExpenses/NewExpenses";
-const expenses = [
+import { useState } from "react";
+
+const DUMMY_EXPENSES = [
   {
     id: Math.random().toString(),
     title: "Toilet Paper",
@@ -24,9 +26,15 @@ const expenses = [
 ];
 
 function App() {
+  const [expenses, setExpenses] = useState(DUMMY_EXPENSES);
+  const addExpenseHandler = (expense) => {
+    setExpenses((prevExpenses) => {
+      return [expense, ...prevExpenses];
+    });
+  };
   return (
     <div>
-      <NewExpenses />
+      <NewExpenses onAdd={addExpenseHandler} />
       <Expenses data={expenses} />
     </div>
   );
